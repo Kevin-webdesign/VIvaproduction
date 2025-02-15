@@ -137,7 +137,7 @@ def registration(request):
         
         #Save User
 
-        user = User.objects.create(
+        user = User.objects.create_user(
             username = username,
             first_name = first_name,
             last_name = last_name,
