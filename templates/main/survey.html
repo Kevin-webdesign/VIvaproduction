@@ -1,0 +1,290 @@
+{% extends '_userpartials/base.html' %}
+
+{% load static %}
+{% block content %}
+  
+
+    <h1>Customer Satisfaction Survey – Dodoma Mattress</h1>
+    <p>Thank you for choosing Dodoma Mattress! Your feedback helps us improve our products and services. Please take a few minutes to answer the following questions.</p>
+    <div class="survey-container">
+        <!-- Navigation Steps -->
+        <div class="navigation-steps">
+            <div class="step active" data-step="1">1</div>
+            <div class="step" data-step="2">2</div>
+            <div class="step" data-step="3">3</div>
+            <div class="step" data-step="4">4</div>
+        </div>
+
+        <form method="post" id="surveyForm" action="{% url 'survey' %}">
+            {% csrf_token %}
+            
+            <!-- Page 1: General Information -->
+            <div class="page" id="page1">
+                <h2>1. General Information (Optional)</h2>
+                <div class="flex">
+                    <div class="col">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
+                    </div>
+                    <div class="col">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="col">
+                        <label>Gender:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gender" value="Male"> Male</label>
+                            <label><input type="radio" name="gender" value="Female"> Female</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label>Age:</label>
+                        <select name="age">
+                            <option value="18-25">18-25</option>
+                            <option value="26-35">26-35</option>
+                            <option value="36-45">36-45</option>
+                            <option value="46-55">46-55</option>
+                            <option value="56+">56+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="col">
+                        <label for="region">Region:</label>
+                        <input type="text" id="region" name="region" placeholder="Enter your region">
+                    </div>
+                    <div class="col">
+                        <label>How did you hear about Dodoma Mattress?</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="source" value="Social Media"> Social Media</label>
+                            <label><input type="checkbox" name="source" value="TV/Radio"> TV/Radio</label>
+                            <label><input type="checkbox" name="source" value="Friend/Family"> Friend/Family</label>
+                            <label><input type="checkbox" name="source" value="Store Display"> Store Display</label>
+                            <label><input type="checkbox" name="source" value="Other"> Other</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="nextPage(2)">Next</button>
+            </div>
+
+            <!-- Page 2: Product Experience -->
+            <div class="page" id="page2" style="display:none;">
+                <h2>2. Product Experience</h2>
+                <label>How long have you been using the Dodoma Mattress?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="usageDuration" value="Less than 3 months"> Less than 3 months</label>
+                    <label><input type="radio" name="usageDuration" value="3-6 months"> 3-6 months</label>
+                    <label><input type="radio" name="usageDuration" value="6-12 months"> 6-12 months</label>
+                    <label><input type="radio" name="usageDuration" value="More than 1 year"> More than 1 year</label>
+                </div>
+
+                <label>Which type of Dodoma Mattress do you own?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="mattressType" value="Foam Mattress"> Foam Mattress</label>
+                    <label><input type="radio" name="mattressType" value="Spring Mattress"> Spring Mattress</label>
+                    <label><input type="radio" name="mattressType" value="Orthopedic Mattress"> Orthopedic Mattress</label>
+                    <label><input type="radio" name="mattressType" value="Other"> Other</label>
+                </div>
+
+                <label>How would you rate the comfort of the mattress?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="comfortRating" value="Excellent"> Excellent</label>
+                    <label><input type="radio" name="comfortRating" value="Good"> Good</label>
+                    <label><input type="radio" name="comfortRating" value="Average"> Average</label>
+                    <label><input type="radio" name="comfortRating" value="Poor"> Poor</label>
+                </div>
+
+                <label>How satisfied are you with the quality and durability?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="qualityRating" value="Very Satisfied"> Very Satisfied</label>
+                    <label><input type="radio" name="qualityRating" value="Satisfied"> Satisfied</label>
+                    <label><input type="radio" name="qualityRating" value="Neutral"> Neutral</label>
+                    <label><input type="radio" name="qualityRating" value="Dissatisfied"> Dissatisfied</label>
+                    <label><input type="radio" name="qualityRating" value="Very Dissatisfied"> Very Dissatisfied</label>
+                </div>
+
+                <label>Does the mattress provide good support for your body?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="supportRating" value="Yes, very good"> Yes, very good</label>
+                    <label><input type="radio" name="supportRating" value="Somewhat good"> Somewhat good</label>
+                    <label><input type="radio" name="supportRating" value="Neutral"> Neutral</label>
+                    <label><input type="radio" name="supportRating" value="Not really"> Not really</label>
+                    <label><input type="radio" name="supportRating" value="No, not at all"> No, not at all</label>
+                </div>
+
+                <button type="button" onclick="prevPage(1)">Previous</button>
+                <button type="button" onclick="nextPage(3)">Next</button>
+            </div>
+
+            <!-- Page 3: Purchase Experience -->
+            <div class="page" id="page3" style="display:none;">
+                <h2>3. Purchase Experience</h2>
+                <label>Where did you buy your Dodoma Mattress?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="purchaseLocation" value="Official Store"> Official Store</label>
+                    <label><input type="radio" name="purchaseLocation" value="Local Retailer"> Local Retailer</label>
+                    <label><input type="radio" name="purchaseLocation" value="Online"> Online</label>
+                    <label><input type="radio" name="purchaseLocation" value="Other"> Other</label>
+                </div>
+
+                <label>How was your shopping experience?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="shoppingExperience" value="Excellent"> Excellent</label>
+                    <label><input type="radio" name="shoppingExperience" value="Good"> Good</label>
+                    <label><input type="radio" name="shoppingExperience" value="Average"> Average</label>
+                    <label><input type="radio" name="shoppingExperience" value="Poor"> Poor</label>
+                </div>
+
+                <label>Were you satisfied with the price of the mattress?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="priceSatisfaction" value="Yes, fair price"> Yes, fair price</label>
+                    <label><input type="radio" name="priceSatisfaction" value="Somewhat fair"> Somewhat fair</label>
+                    <label><input type="radio" name="priceSatisfaction" value="Too expensive"> Too expensive</label>
+                    <label><input type="radio" name="priceSatisfaction" value="Too cheap (low quality concern)"> Too cheap (low quality concern)</label>
+                </div>
+
+                <label>Did the salesperson or website provide enough product details?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="productDetails" value="Yes, very helpful"> Yes, very helpful</label>
+                    <label><input type="radio" name="productDetails" value="Somewhat helpful"> Somewhat helpful</label>
+                    <label><input type="radio" name="productDetails" value="Neutral"> Neutral</label>
+                    <label><input type="radio" name="productDetails" value="Not really"> Not really</label>
+                    <label><input type="radio" name="productDetails" value="No, not at all"> No, not at all</label>
+                </div>
+
+                <button type="button" onclick="prevPage(2)">Previous</button>
+                <button type="button" onclick="nextPage(4)">Next</button>
+            </div>
+
+            <!-- Page 4: Improvement & Suggestions -->
+            <div class="page" id="page4" style="display:none;">
+                <h2>4. Improvement & Suggestions</h2>
+                <label for="likes">What do you like most about your Dodoma Mattress?</label>
+                <textarea id="likes" name="likes" rows="4" placeholder="Enter your response"></textarea>
+
+                <label for="improvements">What could we improve about the mattress?</label>
+                <textarea id="improvements" name="improvements" rows="4" placeholder="Enter your response"></textarea>
+
+                <label>Would you recommend Dodoma Mattress to others?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="recommendation" value="Yes"> Yes</label>
+                    <label><input type="radio" name="recommendation" value="Maybe"> Maybe</label>
+                    <label><input type="radio" name="recommendation" value="No"> No (please explain why)</label>
+                </div>
+
+                <label for="comments">Do you have any additional comments or suggestions?</label>
+                <textarea id="comments" name="comments" rows="4" placeholder="Enter your comments"></textarea>
+
+                <button type="button" onclick="prevPage(3)">Previous</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // JavaScript for form validation and SweetAlert
+        document.getElementById('surveyForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Validate Page 1: General Information
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const age = document.querySelector('select[name="age"]').value;
+            const region = document.getElementById('region').value.trim();
+            const source = document.querySelectorAll('input[name="source"]:checked');
+
+            if (!fullName || !email || !gender || !age || !region || source.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill out all fields on Page 1!',
+                });
+                return;
+            }
+
+            // Validate Page 2: Product Experience
+            const usageDuration = document.querySelector('input[name="usageDuration"]:checked');
+            const mattressType = document.querySelector('input[name="mattressType"]:checked');
+            const comfortRating = document.querySelector('input[name="comfortRating"]:checked');
+            const qualityRating = document.querySelector('input[name="qualityRating"]:checked');
+            const supportRating = document.querySelector('input[name="supportRating"]:checked');
+
+            if (!usageDuration || !mattressType || !comfortRating || !qualityRating || !supportRating) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill out all fields on Page 2!',
+                });
+                return;
+            }
+
+            // Validate Page 3: Purchase Experience
+            const purchaseLocation = document.querySelector('input[name="purchaseLocation"]:checked');
+            const shoppingExperience = document.querySelector('input[name="shoppingExperience"]:checked');
+            const priceSatisfaction = document.querySelector('input[name="priceSatisfaction"]:checked');
+            const productDetails = document.querySelector('input[name="productDetails"]:checked');
+
+            if (!purchaseLocation || !shoppingExperience || !priceSatisfaction || !productDetails) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill out all fields on Page 3!',
+                });
+                return;
+            }
+
+            // Validate Page 4: Improvement & Suggestions
+            const likes = document.getElementById('likes').value.trim();
+            const improvements = document.getElementById('improvements').value.trim();
+            const recommendation = document.querySelector('input[name="recommendation"]:checked');
+            const comments = document.getElementById('comments').value.trim();
+
+            if (!likes || !improvements || !recommendation || !comments) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill out all fields on Page 4!',
+                });
+                return;
+            }
+
+            // If all validations pass, submit the form
+            Swal.fire({
+                icon: 'success',
+                title: 'Thank You!',
+                text: 'Your feedback has been submitted successfully.',
+            }).then(() => {
+                document.getElementById('surveyForm').submit(); // Submit the form
+            });
+        });
+
+        // JavaScript for multi-page navigation
+        function nextPage(pageNumber) {
+            document.getElementById(`page${pageNumber - 1}`).style.display = 'none';
+            document.getElementById(`page${pageNumber}`).style.display = 'block';
+            updateStepIndicator(pageNumber);
+        }
+
+        function prevPage(pageNumber) {
+            document.getElementById(`page${pageNumber + 1}`).style.display = 'none';
+            document.getElementById(`page${pageNumber}`).style.display = 'block';
+            updateStepIndicator(pageNumber);
+        }
+
+        function updateStepIndicator(pageNumber) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                if (index + 1 === pageNumber) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+    </script>
+    {% endblock content %}

@@ -1,0 +1,221 @@
+{% extends '_partials/adminBase.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+  
+    <body>
+        <h1 class="text-center my-4">Survey Data Visualizations</h1>
+
+    <!-- Print Button -->
+    <div class="text-md-right mb-4">
+        <button id="printReportBtn" class="btn btn-primary">
+            <i class="fas fa-print"></i> Print Report
+        </button>
+    </div>
+
+    <!-- Report Container -->
+    <div id="reportDiv" class="container" style="background-color: white;">
+        <div class="card-header">
+            <hr class="my-2" />
+            <h4 class="mb-0 text-center text-secondary"><strong>Survey Data Visualization Report</strong></h4>
+            <hr class="my-2" />
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="text-muted">Department:</div>
+                    <strong>Marketing</strong>
+                </div>
+                <div class="col-md-6 col-sm-6 text-md-right">
+                    <div class="text-muted">Date:</div>
+                    <strong>
+                        <span id="dateMonth"></span>&nbsp;
+                        <span id="dateDay"></span>,&nbsp;
+                        <span id="dateYear"></span>&nbsp; - &nbsp;
+                        <span id="dateHours"></span>:
+                        <span id="dateMinutes"></span>&nbsp;
+                        <span id="dateNoon"></span>
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gender Distribution -->
+        <hr class="my-2" />
+        <div class="row">
+            <div class="col-12 col-xl-12 col-sm-12 text-center">
+                <div class="pgNbCircle blossom text-center">1</div>
+            </div>
+            <div class="col-12 col-xl-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center h3 text-primary">Gender Distribution</h5>
+                        <h5 class="card-subtitle text-center text-muted">Total Records: <strong class="text-danger">{{ total_records }}</strong></h5>
+                    </div>
+                    <table id="genderDistribution" class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Gender</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for gender, count in gender_data.items %}
+                            <tr>
+                                <td>{{ gender }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center strong">Gender Distribution Visualization</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            <canvas id="genderChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Age Distribution -->
+        <hr class="my-2" />
+        <div class="row">
+            <div class="col-12 col-xl-12 col-sm-12 text-center">
+                <div class="pgNbCircle sunrize text-center">2</div>
+            </div>
+            <div class="col-12 col-xl-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center h3 text-primary">Age Distribution</h5>
+                        <h5 class="card-subtitle text-center text-muted">Total Records: <strong class="text-danger">{{ total_records }}</strong></h5>
+                    </div>
+                    <table id="ageDistribution" class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Age Group</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for age, count in age_data.items %}
+                            <tr>
+                                <td>{{ age }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center strong">Age Distribution Visualization</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            <canvas id="ageChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Region Distribution -->
+        <hr class="my-2" />
+        <div class="row">
+            <div class="col-12 col-xl-12 col-sm-12 text-center">
+                <div class="pgNbCircle stella text-center">3</div>
+            </div>
+            <div class="col-12 col-xl-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center h3 text-primary">Region Distribution</h5>
+                        <h5 class="card-subtitle text-center text-muted">Total Records: <strong class="text-danger">{{ total_records }}</strong></h5>
+                    </div>
+                    <table id="regionDistribution" class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for region, count in region_data.items %}
+                            <tr>
+                                <td>{{ region }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center strong">Region Distribution Visualization</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            <canvas id="regionChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% load static %}
+
+<h1 class="text-center my-4">Mattress Type Distribution</h1>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Mattress Type</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mattress_type, count in mattype_data.items %}
+                        <tr>
+                            <td>{{ mattress_type }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Display Mattress Type Data in a Chart -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="card-title">Mattress Type Visualization</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="mattypeChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+
+
+        <!-- Footer -->
+        <hr class="my-2" />
+        <div class="row pb-6 ml-4">
+            <div class="col-md-6 col-sm-6">
+                {% comment %} <div class="text-muted">Generated By {{ request.user.first_name }} {{ request.user.last_name }}</div> {% endcomment %}
+                <strong>Marketing Director</strong>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+        {% endblock content %}

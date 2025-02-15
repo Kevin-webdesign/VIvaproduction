@@ -1,0 +1,146 @@
+{% extends '_partials/adminBase.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">All Survey Participants</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="add-row" class="display table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Region</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if responses %}
+                                {% for response in responses %}
+                                    <tr>
+                                        <td>{{ response.fullName }}</td>
+                                        <td>{{ response.email }}</td>
+                                        <td>{{ response.gender }}</td>
+                                        <td>{{ response.age }}</td>
+                                        <td>{{ response.region }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No survey responses found.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Gender Distribution</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="genderChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Age Distribution</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="ageChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Debugging and Chart Initialization -->
+<script>
+    // Debugging: Log data passed from Django
+    console.log("Gender Labels:", {{ gender_labels|safe }});
+    console.log("Gender Values:", {{ gender_values|safe }});
+    console.log("Age Labels:", {{ age_labels|safe }});
+    console.log("Age Values:", {{ age_values|safe }});
+
+    // Gender Distribution Pie Chart
+    const genderCtx = document.getElementById('genderChart');
+    if (genderCtx) {
+        const genderData = {
+            labels: {{ gender_labels|safe }},
+            datasets: [{
+                data: {{ gender_values|safe }},
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            }]
+        };
+
+        new Chart(genderCtx, {
+            type: 'pie',
+            data: genderData,
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Gender Distribution',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    } else {
+        console.error("Gender chart canvas not found.");
+    }
+
+    // Age Distribution Bar Chart
+    const ageCtx = document.getElementById('ageChart');
+    if (ageCtx) {
+        const ageData = {
+            labels: {{ age_labels|safe }},
+            datasets: [{
+                label: 'Number of Participants',
+                data: {{ age_values|safe }},
+                backgroundColor: '#4BC0C0',
+            }]
+        };
+
+        new Chart(ageCtx, {
+            type: 'bar',
+            data: ageData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Age Distribution',
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+    } else {
+        console.error("Age chart canvas not found.");
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% load static %}
+
+<header>
+    <nav>
+        <div class="logo">Viva Production</div>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'survey' %}">Survey</a></li>
+        </ul>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    </nav>
+</header>

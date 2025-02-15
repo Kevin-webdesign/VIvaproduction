@@ -1,0 +1,83 @@
+{% extends '_partials/adminBase.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h4 class="card-title">Add Row</h4>
+                <button
+                  class="btn btn-primary btn-round ms-auto"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addRowModal"
+                >
+                  <i class="fa fa-plus"></i>
+                  Add Row
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="add-row" class="display table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Region</th>
+                                <th>Source</th>
+                                <th>Usage Duration</th>
+                                <th>Mattress Type</th>
+                                <th>Comfort</th>
+                                <th>Quality</th>
+                                <th>Support Rating</th>
+                                <th>Purchase Location</th>
+                                <th>Shopping Experience</th>
+                                <th>Price Satisfaction</th>
+                                <th>Product Details</th>
+                                <th>Likes</th>
+                                <th>Improvements</th>
+                                <th>Recommendation</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% for response in responses %}
+                          <tr>
+                              <td>{{ response.fullName }}</td>
+                              <td>{{ response.email }}</td>
+                              <td>{{ response.gender }}</td>
+                              <td>{{ response.age }}</td>
+                              <td>{{ response.region }}</td>
+                              <td>{{ response.heard_about }}</td>
+                              <td>{{ response.usageDuration }}</td>
+                              <td>{{ response.mattressType }}</td>
+                              <td>{{ response.comfortRating }}</td>
+                              <td>{{ response.qualityRating }}</td>
+                              <td>{{ response.supportRating }}</td>
+                              <td>{{ response.purchaseLocation }}</td>
+                              <td>{{ response.shoppingExperience }}</td>
+                              <td>{{ response.priceSatisfaction }}</td>
+                              <td>{{ response.productDetails }}</td>
+                              <td>{{ response.likes }}</td>
+                              <td>{{ response.improvements }}</td>
+                              <td>{{ response.recommendation }}</td>
+                              <td>{{ response.comments }}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                      
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+
+{% extends '_userpartials/base.html' %}
+
+{% load static %}
+{% block content %}
+  
+<div class="auth-container">
+    {% if message %}
+    <h1> {{message}} </h1>
+    {% endif %}
+    <h2>Please register yourself</h2>
+    <form method="post" action="{% url 'register'%}">
+        {% csrf_token %}
+        <label for="name">Usr name:</label>
+        <input type="text" id="name" name="username" required>
+        <label for="name">First name:</label>
+        <input type="text" id="name" name="firstname" required>
+        <label for="name">Flast name:</label>
+        <input type="text" id="name" name="lastname" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <label for="confirm">Confirm password:</label>
+        <input type="password" id="confirm" name="confirm" required><br>
+        <button type="submit">Register</button>
+        <p>Have an account? <a href="{% url 'login' %}">Sign in</a></p>
+    </form>
+</div>
+    {% endblock content %}

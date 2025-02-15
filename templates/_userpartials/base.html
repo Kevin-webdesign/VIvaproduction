@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <!-- HEADER / LINKS /  BASIC SCRIPTS -->
+  {% include '_userpartials/header.html' %}
+  <!-- END HEADER / LINKS /  BASIC SCRIPTS -->
+  <body>
+    <div class="wrapper">
+      <div class="main-panel">
+        <!-- NAV BAR AND LOGO DIV -->
+        {% include '_userpartials/navbar.html' %}
+        <!-- END NAV BAR AND LOGO DIV -->
+          {% block content %}
+  
+          {% endblock content %}
+        </div>
+        {% include '_userpartials/footer.html' %} 
+      </div>
+    </div>
+  </body>
+</html>

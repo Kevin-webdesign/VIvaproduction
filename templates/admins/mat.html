@@ -1,0 +1,33 @@
+{% load static %}
+
+<h1 class="text-center my-4">Mattress Type Distribution</h1>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Mattress Type</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% comment %} {% for mattress_type, count in mattype_data.items %}
+                        <tr>
+                            <td>{{ mattress_type }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                    {% endfor %} {% endcomment %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Display Mattress Type Data in a Chart -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="card-title">Mattress Type Visualization</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="mattypeChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
