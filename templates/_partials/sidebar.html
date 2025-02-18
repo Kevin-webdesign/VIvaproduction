@@ -4,7 +4,7 @@
     <div class="sidebar-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-            <h1 style="color: aliceblue;">viva production</h1>
+            <h1 style="color: aliceblue;">Viva Production</h1>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
                     <i class="gg-menu-right"></i>
@@ -19,26 +19,72 @@
         </div>
         <!-- End Logo Header -->
     </div>
+    
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
-                <li class="nav-item active"> <a href="{% url 'dashboard' %}" >
-                        <i class="fas fa-home"></i> <p>Dashboard</p></a>
+                <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-home"></i>
+                        <p>Dashboard</p>
+                    </a>
                 </li>
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Components</h4>
+                <li class="nav-item {% if request.resolver_match.url_name == 'surveys' %}active{% endif %}">
+                    <a href="{% url 'surveys' %}">
+                        <i class="fas fa-poll"></i>
+                        <p>Survey Responses</p>
+                    </a>
                 </li>
-                <li class="nav-item">
-                 <a href="{% url 'surveys' %}">survey response</a>
+                <li class="nav-item {% if request.resolver_match.url_name == 'age' %}active{% endif %}">
+                    <a href="{% url 'age' %}">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>age Distribution</p>
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{% url 'analysis' %}">Analysis</a>
+
+                <li class="nav-item {% if request.resolver_match.url_name == 'gender' %}active{% endif %}">
+                    <a href="{% url 'gender' %}">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Gender Distribution</p>
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{% url 'surveys' %}">survey response</a>
+                <li class="nav-item {% if request.resolver_match.url_name == 'region' %}active{% endif %}">
+                    <a href="{% url 'region' %}">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Region Distribution</p>
+                    </a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'purchase_location' %}active{% endif %}">
+                    <a href="{% url 'purchase_location' %}">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>location Distribution</p>
+                    </a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'source' %}active{% endif %}">
+                    <a href="{% url 'source' %}">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Info Source Distribution</p>
+                    </a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'mattype' %}active{% endif %}">
+                    <a href="{% url 'mattype' %}">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>mattress_type Distribution</p>
+                    </a>
+                </li>
+
+                <li class="nav-item {% if request.resolver_match.url_name == 'statistic' %}active{% endif %}">
+                    <a href="{% url 'statistic' %}">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Statistics</p>
+                    </a>
+                </li>
+
+                <li class="nav-item {% if request.resolver_match.url_name == 'analysis' %}active{% endif %}">
+                    <a href="{% url 'analysis' %}">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Analysis Report</p>
+                    </a>
                 </li>
             </ul>
         </div>

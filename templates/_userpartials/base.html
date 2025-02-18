@@ -18,5 +18,48 @@
         {% include '_userpartials/footer.html' %} 
       </div>
     </div>
+    <script>
+      document.getElementById('registerForm').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent form submission
+
+          let username = document.getElementById('username').value;
+          let firstname = document.getElementById('firstname').value;
+          let lastname = document.getElementById('lastname').value;
+          let password = document.getElementById('password').value;
+          let confirm = document.getElementById('confirm').value;
+          let passwordError = document.getElementById('passwordError');
+          let confirmError = document.getElementById('confirmError');
+          
+          let commonPasswords = ["password", "123456", "qwerty", "abc123", "admin", "password1"];
+          passwordError.innerHTML = "";
+          confirmError.innerHTML = "";
+
+          // Password validation
+          if (password.length < 8) {
+              passwordError.innerHTML = "Password must be at least 8 characters.";
+              return;
+          }
+          if (!isNaN(password)) {
+              passwordError.innerHTML = "Password cannot be entirely numeric.";
+              return;
+          }
+          if (commonPasswords.includes(password.toLowerCase())) {
+              passwordError.innerHTML = "Password is too common.";
+              return;
+          }
+          if (password.includes(username) || password.includes(firstname) || password.includes(lastname)) {
+              passwordError.innerHTML = "Password cannot contain personal information.";
+              return;
+          }
+          if (password !== confirm) {
+              confirmError.innerHTML = "Passwords do not match.";
+              return;
+          }
+
+          alert("Registration successful!");
+          this.submit();
+      });
+  </script>
+
   </body>
 </html>

@@ -601,3 +601,10 @@ nav ul li a:hover {
     color: #f39c12;
 }
 
+.nav-item.active {
+    background-color: #4a69bd; /* Custom highlight color */
+    color: white;
+}
+.nav-item.active a {
+    color: white !important;
+}

@@ -48,22 +48,19 @@
               href="#"
               aria-expanded="false"
             >
-              {% comment %} <div class="avatar-sm">
-                <img
-                  src="assets/img/profile.jpg"
-                  alt="..."
-                  class="avatar-img rounded-circle"
-                />
-              </div> {% endcomment %}
+              <img src="{% static 'img/profile.jpg' %}" alt="Profile" class="avatar-img rounded-circle" />
+
               <span class="profile-username">
-                <span class="op-7">Hi,</span>
-                <span class="fw-bold">Leo</span>
+               {% if user.is_authenticated %}
+                <p>Welcome, <strong>{{ user.username }}</strong></p>
+               {% endif %}
+
               </span>
             </a>
             <ul class="dropdown-menu dropdown-user animated fadeIn">
               <div class="dropdown-user-scroll scrollbar-outer">
                 <li>
-                  <a class="dropdown-item" href="#">Logout</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                 </li>
               </div>
             </ul>

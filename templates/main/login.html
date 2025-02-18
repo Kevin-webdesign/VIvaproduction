@@ -7,16 +7,92 @@
 <div class="auth-container">
     <h1>Log in</h1>
     {% if message %}
-    <h1> {{message}} </h1>
-    {% endif %}
-    <form method="post" action = "{% url 'login'%}">
+    <script>
+        let message = "{{ message|escapejs }}";
+        Swal.fire({
+            icon: 'warning',
+            title: 'Warning...',
+            text: message,
+        });
+    </script>
+{% endif %}
+
+    <form  id="loginForm" method="post" action = "{% url 'login'%}">
         {% csrf_token %}
-        <label for="email">Email:</label>
-        <input type="text" id="username" name="username" required><br>
+        <label for="username">User name:</label>
+        <input type="text" id="username" name="username"><br>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+        <div class="password-container">
+            <input type="password" id="password" name="password">
+            <a type="button" class="toggle-password" onclick="togglePassword('password', 'toggleIcon1')">
+                <i id="toggleIcon1" class="fas fa-eye"></i>
+            </a>
+        </div>
         <button type="submit">Log in</button>
         <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
     </form>
 </div>
+<script>
+    function togglePassword(inputId, iconId) {
+        let input = document.getElementById(inputId);
+        let icon = document.getElementById(iconId);
+        
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+    
+        let commonPasswords = ["password", "123456", "qwerty", "abc123", "admin", "password1"];
+    
+        if (username === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error...',
+                text: 'Username cannot be empty.',
+            });
+            return;
+        }
+        if (password === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error...',
+                text: 'Password cannot be empty.',
+            });
+            return;
+        }
+        if (!isNaN(password)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error...',
+                text: 'Password cannot be entirely numeric.',
+            });
+            return;
+        }
+    
+        Swal.fire({
+            icon: 'success',
+            title: `Hello, ${username}!`,
+            text: 'Welcome Again !!',
+            timer: 2000, // Auto close after 2 seconds
+            showConfirmButton: false
+        }).then((result) => {
+            // Ensure form submits only after the alert closes (by timer)
+            if (result.dismiss === Swal.DismissReason.timer) {
+                document.getElementById('loginForm').submit();
+            }
+        });
+    });
+    </script>
+
  {% endblock content %}

@@ -1,30 +1,134 @@
-
 {% extends '_userpartials/base.html' %}
-
 {% load static %}
+
 {% block content %}
   
 <div class="auth-container">
-    {% if message %}
-    <h1> {{message}} </h1>
-    {% endif %}
     <h2>Please register yourself</h2>
-    <form method="post" action="{% url 'register'%}">
+    
+    <form id="registerForm" method="post" action="{% url 'register' %}">
         {% csrf_token %}
-        <label for="name">Usr name:</label>
-        <input type="text" id="name" name="username" required>
-        <label for="name">First name:</label>
-        <input type="text" id="name" name="firstname" required>
-        <label for="name">Flast name:</label>
-        <input type="text" id="name" name="lastname" required><br>
+        {% if message %}
+        <script>
+            let message = "{{ message|escapejs }}";
+            Swal.fire({
+                icon: 'error',
+                title: 'error...',
+                text: message,
+            });
+        </script>
+    {% endif %}
+    
+        <label for="username">User name:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="firstname">First name:</label>
+        <input type="text" id="firstname" name="firstname" required>
+        
+        <label for="lastname">Last name:</label>
+        <input type="text" id="lastname" name="lastname" required>
+
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" required>
+
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+        <div class="password-container">
+            <input type="password" id="password" name="password" required>
+            <a type="button" class="toggle-password" onclick="togglePassword('password', 'toggleIcon1')">
+                <i id="toggleIcon1" class="fas fa-eye"></i>
+            </a>
+        </div>
+
         <label for="confirm">Confirm password:</label>
-        <input type="password" id="confirm" name="confirm" required><br>
+        <div class="password-container">
+            <input type="password" id="confirm" name="confirm" required>
+            <a type="button" class="toggle-password" onclick="togglePassword('confirm', 'toggleIcon2')">
+                <i id="toggleIcon2" class="fas fa-eye"></i>
+            </a>
+        </div>
+
         <button type="submit">Register</button>
         <p>Have an account? <a href="{% url 'login' %}">Sign in</a></p>
-    </form>
+    </form>    
 </div>
-    {% endblock content %}
+
+<script>
+    function togglePassword(inputId, iconId) {
+        let input = document.getElementById(inputId);
+        let icon = document.getElementById(iconId);
+        
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        let username = document.getElementById('username').value;
+        let firstname = document.getElementById('firstname').value;
+        let lastname = document.getElementById('lastname').value;
+        let password = document.getElementById('password').value;
+        let confirm = document.getElementById('confirm').value;
+
+        let commonPasswords = ["password", "123456", "qwerty", "abc123", "admin", "password1"];
+
+        // Password validation
+        if (password.length < 8) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password must be at least 8 characters long.',
+            });
+            return;
+        }
+        if (!isNaN(password)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password cannot be entirely numeric.',
+            });
+            return;
+        }
+        if (commonPasswords.includes(password.toLowerCase())) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password is too common. Choose a stronger one.',
+            });
+            return;
+        }
+        if (password.includes(username) || password.includes(firstname) || password.includes(lastname)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password cannot contain personal information.',
+            });
+            return;
+        }
+        if (password !== confirm) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Passwords do not match!',
+            });
+            return;
+        }
+
+        this.submit(); // Submit the form if validation passes
+         // If all validations pass, submit the form
+         Swal.fire({
+            icon: 'success',
+            title: 'Welcome',
+            text: 'Your registration is successfull',
+        })
+    });
+</script>
+
+{% endblock content %}

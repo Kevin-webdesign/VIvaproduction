@@ -1,0 +1,297 @@
+{% extends '_partials/adminBase.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+    <body>
+        <h1 class="text-center my-4">Survey Data Visualizations</h1>
+
+        <!-- Gender Statistics -->
+        <div class="row mt-4">
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Gender Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="genderChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Gender Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Total Records: <strong>{{ total_records }}</strong></li>
+                            <li class="list-group-item">Most Common Gender: <strong>{{ max_gender }}</strong> ({{ max_count }} records)</li>
+                            <li class="list-group-item">Least Represented Gender: <strong>{{ min_gender }}</strong> ({{ min_count }} records)</li>
+                            <li class="list-group-item">Male to Female Ratio: <strong>{{ gender_ratio }}</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gender Interpretation -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title text-primary text-center">Gender Data Interpretation</h5>
+            </div>
+            <div class="card-body">
+                <p id="genderAnalysis" class="text-muted text-center"></p>
+            </div>
+        </div>
+
+        <!-- Region Statistics -->
+        <div class="row mt-4">
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Region Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="regionChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Region Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Total Records: <strong>{{ total_records }}</strong></li>
+                            <li class="list-group-item">Most Common Region: <strong>{{ max_region }}</strong> ({{ max_region_count }} records)</li>
+                            <li class="list-group-item">Least Represented Region: <strong>{{ min_region }}</strong> ({{ min_region_count }} records)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Region Interpretation -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title text-primary text-center">Region Data Interpretation</h5>
+            </div>
+            <div class="card-body">
+                <p id="regionAnalysis" class="text-muted text-center"></p>
+            </div>
+        </div>
+
+        <!-- Purchase Method Statistics -->
+        <div class="row mt-4">
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Purchase Method Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="purchaseChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Purchase Method Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Total Records: <strong>{{ total_records }}</strong></li>
+                            <li class="list-group-item">Most Common Purchase Method: <strong>{{ max_purchase_method }}</strong> ({{ max_purchase_count }} records)</li>
+                            <li class="list-group-item">Least Represented Purchase Method: <strong>{{ min_purchase_method }}</strong> ({{ min_purchase_count }} records)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purchase Method Interpretation -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title text-primary text-center">Purchase Method Data Interpretation</h5>
+            </div>
+            <div class="card-body">
+                <p id="purchaseAnalysis" class="text-muted text-center"></p>
+            </div>
+        </div>
+
+        <!-- Mattress Type Statistics -->
+        <div class="row mt-4">
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Mattress Type Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="mattypeChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-primary text-center">Mattress Type Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Total Records: <strong>{{ total_records }}</strong></li>
+                            <li class="list-group-item">Most Common Mattress Type: <strong>{{ max_mattype }}</strong> ({{ max_mattype_count }} records)</li>
+                            <li class="list-group-item">Least Represented Mattress Type: <strong>{{ min_mattype }}</strong> ({{ min_mattype_count }} records)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mattress Type Interpretation -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title text-primary text-center">Mattress Type Data Interpretation</h5>
+            </div>
+            <div class="card-body">
+                <p id="mattypeAnalysis" class="text-muted text-center"></p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <hr class="my-2" />
+        <div class="row pb-6 ml-4">
+            <div class="col-md-4 col-sm-6">
+                <strong>Marketing Director</strong>
+            </div>
+        </div>
+
+        <script>
+            function generateColors(count) {
+                const colors = [];
+                for (let i = 0; i < count; i++) {
+                    const r = Math.floor(Math.random() * 255);
+                    const g = Math.floor(Math.random() * 255);
+                    const b = Math.floor(Math.random() * 255);
+                    colors.push(`rgba(${r}, ${g}, ${b}, 0.8)`);
+                }
+                return colors;
+            }
+
+            // Gender Chart
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            new Chart(genderCtx, {
+                type: 'pie',
+                data: {
+                    labels: {{ gender_labels|safe }},
+                    datasets: [{
+                        data: {{ gender_counts|safe }},
+                        backgroundColor: generateColors({{ gender_labels|length }}),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+
+            // Region Chart
+            const regionCtx = document.getElementById('regionChart').getContext('2d');
+            new Chart(regionCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ region_labels|safe }},
+                    datasets: [{
+                        label: 'Region Distribution',
+                        data: {{ region_counts|safe }},
+                        backgroundColor: generateColors({{ region_labels|length }}),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Purchase Method Chart
+            const purchaseCtx = document.getElementById('purchaseChart').getContext('2d');
+            new Chart(purchaseCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ purchaseLocation_labels|safe }},
+                    datasets: [{
+                        label: 'Purchase Method Distribution',
+                        data: {{ purchaseLocation_counts|safe }},
+                        backgroundColor: generateColors({{ purchaseLocation_labels|length }}),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Mattress Type Chart
+            const mattypeCtx = document.getElementById('mattypeChart').getContext('2d');
+            new Chart(mattypeCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ mattype_labels|safe }},
+                    datasets: [{
+                        label: 'Mattress Type Distribution',
+                        data: {{ mattype_counts|safe }},
+                        backgroundColor: generateColors({{ mattype_labels|length }}),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Interpretations
+            function analyzeData(labels, counts, analysisId, dataType) {
+                let total = counts.reduce((a, b) => a + b, 0);
+                let maxIndex = counts.indexOf(Math.max(...counts));
+                let minIndex = counts.indexOf(Math.min(...counts));
+
+                let analysis = `The dataset contains a total of <strong>${total}</strong> records for ${dataType}. 
+                                The most common ${dataType} is <strong>${labels[maxIndex]}</strong> with <strong>${counts[maxIndex]}</strong> records, 
+                                while the least represented ${dataType} is <strong>${labels[minIndex]}</strong> with only <strong>${counts[minIndex]}</strong> records.`;
+
+                document.getElementById(analysisId).innerHTML = analysis;
+            }
+
+            // Analyze Gender Data
+            analyzeData({{ gender_labels|safe }}, {{ gender_counts|safe }}, "genderAnalysis", "gender");
+
+            // Analyze Region Data
+            analyzeData({{ region_labels|safe }}, {{ region_counts|safe }}, "regionAnalysis", "region");
+
+            // Analyze Purchase Method Data
+            analyzeData({{ purchaseLocation_labels|safe }}, {{ purchaseLocation_counts|safe }}, "purchaseAnalysis", "purchase method");
+
+            // Analyze Mattress Type Data
+            analyzeData({{ mattype_labels|safe }}, {{ mattype_counts|safe }}, "mattypeAnalysis", "mattress type");
+        </script>
+    </body>
+    {% endblock content %}
+</html>

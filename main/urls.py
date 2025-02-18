@@ -11,4 +11,11 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('analysis/', views.analysis, name='analysis'),
+    path('gender/', views.gender, name='gender'),  
+    path('region/', views.region, name='region'),
+    path('purchase_location/', views.purchase, name='purchase_location'),
+   path('source', views.source, name='source'),
+   path('mattpye', views.mattype, name='mattype'),
+   path('age', views.age, name='age'),
+   path('statistic', views.gender_statistics, name='statistic')
 ]
